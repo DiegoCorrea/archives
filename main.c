@@ -3,6 +3,7 @@
 # include <stdlib.h>
 
 # define MAXNAME 30
+static const char DIRBANDA[MAXNAME] = "files/bandas.bin";
 
 unsigned int bandasGlobalID;
 unsigned int albunsGlobalID;
@@ -102,7 +103,7 @@ void alterarNomeBanda(Bandas *banda, char nome[MAXNAME]){
   FILE *arquivo;
   int id;
   /*
-  arquivo = fopen("files/bandas.txt", "r");
+  arquivo = fopen(DIRBANDA, "r");
   if(arquivo != NULL){
     while(fscanf(arquivo, "'%d',' %[^']\n';\n", &id,nome) != EOF){
       printf("%d %s\n", id, nome);
@@ -197,7 +198,7 @@ void listarBandas(Bandas *ptrBandas){
 
 void salvarArquivoBandas(Bandas *ptrBandas){
   FILE *arquivo;
-  arquivo = fopen("files/bandas.txt", "w");
+  arquivo = fopen(DIRBANDA, "w");
   while(ptrBandas != NULL){
    fprintf(arquivo, "'%d','%s';\n", ptrBandas->id,ptrBandas->nome);
    ptrBandas = ptrBandas->prox;
@@ -211,7 +212,7 @@ void carregarArquivoBandas(Bandas **ptrBandas){
   int id;
   char nome[MAXNAME]; 
 
-  arquivo = fopen("files/bandas.txt", "r");
+  arquivo = fopen(DIRBANDA, "r");
   if(arquivo != NULL){
     while(fscanf(arquivo, "'%d',' %[^']\n';\n", &id,nome) != EOF){
       banda = criarBanda(nome);
