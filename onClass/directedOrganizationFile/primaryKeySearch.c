@@ -33,24 +33,47 @@ void save(int input){
   int hashing;
   Unity walker;
 
-  if((fp = fopen(DIR, "w")) == NULL) {
+  if((fp = fopen(DIR, "w")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);    
-  }
-
-  hashing = input % MAXREGISTER;
-  fseek(fp,hashing*sizeof(struct Unity),SEEK_SET);
-  while(fread(&walker, sizeof(struct Unity), 1,fp) == 1){
-    fseek(fp,walker.pointer*sizeof(struct Unity),SEEK_SET);
   }
 
   unity.pointer = 0;
   unity.pointer--;
   unity.value = input;
 
-  if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
-    printf("Erro na escrita do arquivo");
+  hashing = input % MAXREGISTER;
+  fseek(fp,hashing*sizeof(struct Unity),SEEK_SET);
 
+  if(fread(&walker, sizeof(struct Unity), 1,fp) != 1){
+    if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo"); 
+    else
+      printf("Registro salvo com sucesso\n");
+  } else{
+    while(walker.pointer >= 0){
+      fseek(fp,walker.pointer*sizeof(struct Unity),SEEK_SET);
+      fread(&walker, sizeof(struct Unity), 1,fp);
+    }
+
+    walker.pointer = r;
+    if(fwrite(&walker, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo");
+    else
+      printf("Ponteiro do Registro salvo com sucesso\n");
+
+    fseek(fp,r*sizeof(struct Unity),SEEK_SET);
+    if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo");
+    else
+      printf("Registro salvo com sucesso\n");
+
+    do{
+      r--;
+      fseek(fp,r*sizeof(struct Unity),SEEK_SET);
+    }while((r >= 0) && (fread(&walker, sizeof(struct Unity), 1,fp) == 1));
+  }
+  
   fclose(fp);     
 }
 
