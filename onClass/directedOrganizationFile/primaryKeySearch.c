@@ -4,7 +4,7 @@
 
 # define MAXREGISTER 11
 static const char DIR[30] = "files/primaryKeySearch.bin";
-
+static const int LAMBIDA = -1;
 int r = MAXREGISTER - 1;
 
 struct Unity{
@@ -14,11 +14,12 @@ struct Unity{
 
 void save(int );
 void list();
+void createRegister();
 
 int main() {
   int i, input;
 
-
+ createRegister();
   while(scanf("%d", &input) > 0){
     save(input);
   }
@@ -38,8 +39,7 @@ void save(int input){
     exit(1);    
   }
 
-  unity.pointer = 0;
-  unity.pointer--;
+  unity.pointer = LAMBIDA;
   unity.value = input;
 
   hashing = input % MAXREGISTER;
@@ -66,7 +66,7 @@ void save(int input){
     if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
       printf("Erro na escrita do arquivo");
     else
-      printf("Registro salvo com sucesso\n");
+      printf("Registro salvo com sucesso com alteração no R\n");
 
     do{
       r--;
@@ -95,6 +95,27 @@ void list(){
     } else {
       printf("----------------------\n");
     }
+  }
+  fclose(fp); 
+}
+
+void createRegister(){
+  FILE *fp;
+  int i;
+
+  if((fp = fopen(DIR, "w")) == NULL) {
+    printf("Erro na abertura do arquivo");
+    exit(1);    
+  }
+
+  rewind(fp);
+  unity.value = LAMBIDA;
+  unity.pointer = LAMBIDA;
+
+  for(i = 0; i < MAXREGISTER ;i++){
+    if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo");
+    fseek(fp,sizeof(struct Unity),SEEK_CUR);
   }
   fclose(fp); 
 }
