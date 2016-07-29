@@ -19,6 +19,10 @@ int main() {
   remove();
 
   list();
+  
+  remove();
+
+  list();
 
   return 0;
 }

@@ -20,9 +20,10 @@ int main() {
   int i, input;
 
  createRegister();
-  while(scanf("%d", &input) > 0){
-    save(input);
-  }
+
+  //while(scanf("%d", &input) > 0){
+  //  save(input);
+  //}
 
   list();
 
@@ -94,6 +95,7 @@ void list(){
       printf("Valor: %d Ponteiro: %d\n", unity.value,unity.pointer);
     } else {
       printf("----------------------\n");
+      printf("Valor: %d Ponteiro: %d\n", unity.value,unity.pointer);  
     }
   }
   fclose(fp); 
@@ -109,13 +111,12 @@ void createRegister(){
   }
 
   rewind(fp);
-  unity.value = LAMBIDA;
-  unity.pointer = LAMBIDA;
+  //unity.value = LAMBIDA;
+  //unity.pointer = LAMBIDA;
 
-  for(i = 0; i < MAXREGISTER ;i++){
-    if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
-      printf("Erro na escrita do arquivo");
-    fseek(fp,sizeof(struct Unity),SEEK_CUR);
-  }
+  //for(i = 0; i < MAXREGISTER ;i++){
+    //if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
+      //printf("Erro na escrita do arquivo");
+  //}
   fclose(fp); 
 }
