@@ -7,6 +7,7 @@ int tam;
 void input();
 void list();
 void remove();
+void sequentialSearch();
 
 int main() {
 
@@ -16,13 +17,15 @@ int main() {
 
   list();
 
-  remove();
+  sequentialSearch();
 
-  list();
+  //remove();
+
+  //list();
   
-  remove();
+  //remove();
 
-  list();
+  //list();
 
   return 0;
 }
@@ -48,9 +51,9 @@ void list(){
   FILE *fp;
   int i, value;
 
-  printf("\t\tListando todos registros***\n");
+  printf("\t\tList all the numbers***\n");
   if((fp = fopen(DIR, "r")) == NULL) {
-    printf("Erro na abertura do arquivo");
+    printf("Error can't open the file");
     exit(1);
   }
   
@@ -58,9 +61,31 @@ void list(){
 
   for(i = 0; i < tam; i++){
     fread(&value, sizeof(int), 1,fp);
-    printf("Valor: %d\n", value);
+    printf("Value: %d\n", value);
   }
   fclose(fp);
+}
+
+void sequentialSearch(){
+FILE *fp;
+  int i, value, number;
+
+  printf("\t\tSearch the number***\n");
+  if((fp = fopen(DIR, "r")) == NULL) {
+    printf("Error can't open the file");
+    exit(1);
+  }
+  
+  rewind(fp);
+
+  scanf("%d", &number);
+  for(i = 0; i < tam && value != number; i++, fread(&value, sizeof(int), 1,fp));
+
+  if(value == number)
+    printf("Value: %d\n", value);
+  else
+    printf("Number not found!\n");
+  fclose(fp);  
 }
 
 void remove(){
