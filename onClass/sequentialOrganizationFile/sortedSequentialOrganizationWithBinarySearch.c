@@ -1,13 +1,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-static const char DIR[30] = "files/sSOWSS.bin";
+static const char DIR[30] = "files/sSOWBS.bin";
 int tam;
 
 void input();
 void list();
 void remove();
-void sequentialSearch();
+void binarySearch();
 
 int main() {
 
@@ -17,7 +17,7 @@ int main() {
 
   list();
 
-  sequentialSearch();
+  binarySearch();
 
   //remove();
 
@@ -66,27 +66,39 @@ void list(){
   fclose(fp);
 }
 
-void sequentialSearch(){
+void binarySearch(){
 FILE *fp;
-  int i, value, number;
+  int i, tmp, number, r = tam, l = 0;
 
   printf("\t\tSearch the number***\n");
   if((fp = fopen(DIR, "r")) == NULL) {
     printf("Error can't open the file");
     exit(1);
   }
-  
-  rewind(fp);
 
   scanf("%d", &number);
-  for(i = 0; i < tam && value != number; i++, fread(&value, sizeof(int), 1,fp));
 
-  if(value == number)
-    printf("Value: %d\n", value);
+  fseek(fp,sizeof(int)*((r+l)/2),SEEK_SET);
+  fread(&tmp, sizeof(int), 1,fp);
+
+  while(l != r && tmp != number){
+    if(tmp > number){
+      r = (r+l)/2;
+    } else {
+      l = (r+l)/2;
+    }
+
+    fseek(fp,sizeof(int)*((r+l)/2),SEEK_SET);
+    fread(&tmp, sizeof(int), 1,fp);
+  }
+
+  if(tmp == number)
+    printf("Value: %d\n", tmp);
   else
     printf("Number not found!\n");
-  fclose(fp);  
+  fclose(fp);
 }
+
 
 void remove(){
   FILE *fp;
