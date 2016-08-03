@@ -21,9 +21,10 @@ int main() {
 
  createRegister();
 
-  //while(scanf("%d", &input) > 0){
-  //  save(input);
-  //}
+  while(scanf("%d", &input) > 0){
+    save(input);
+    list();
+  }
 
   list();
 
@@ -33,9 +34,9 @@ int main() {
 void save(int input){
   FILE *fp;
   int hashing;
-  Unity walker;
+  struct Unity walker;
 
-  if((fp = fopen(DIR, "w")) == NULL){
+  if((fp = fopen(DIR, "r+")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);    
   }
@@ -45,16 +46,19 @@ void save(int input){
 
   hashing = input % MAXREGISTER;
   fseek(fp,hashing*sizeof(struct Unity),SEEK_SET);
+  fread(&walker, sizeof(struct Unity), 1,fp);
+  fseek(fp,-sizeof(struct Unity),SEEK_CUR);
 
-  if(fread(&walker, sizeof(struct Unity), 1,fp) != 1){
+  if(walker.value == LAMBIDA){  
     if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
       printf("Erro na escrita do arquivo"); 
     else
       printf("Registro salvo com sucesso\n");
   } else{
-    while(walker.pointer >= 0){
+    while(walker.pointer != LAMBIDA){
       fseek(fp,walker.pointer*sizeof(struct Unity),SEEK_SET);
       fread(&walker, sizeof(struct Unity), 1,fp);
+      fseek(fp,-sizeof(struct Unity),SEEK_CUR);
     }
 
     walker.pointer = r;
@@ -72,7 +76,8 @@ void save(int input){
     do{
       r--;
       fseek(fp,r*sizeof(struct Unity),SEEK_SET);
-    }while((r >= 0) && (fread(&walker, sizeof(struct Unity), 1,fp) == 1));
+      fread(&walker, sizeof(struct Unity), 1,fp);
+    }while((r >= 0) && ( walker.value != LAMBIDA));
   }
   
   fclose(fp);     
@@ -90,12 +95,12 @@ void list(){
   
   rewind(fp); 
 
+  printf("      Valor    Ponteiro\n");
   for(i = 0; i < MAXREGISTER ;i++){
     if(fread(&unity, sizeof(struct Unity), 1,fp) == 1) {
-      printf("Valor: %d Ponteiro: %d\n", unity.value,unity.pointer);
+      printf("P[%d]: %d    |     %d\n", i, unity.value,unity.pointer);
     } else {
-      printf("----------------------\n");
-      printf("Valor: %d Ponteiro: %d\n", unity.value,unity.pointer);  
+      printf("Local vazio\n");
     }
   }
   fclose(fp); 
@@ -111,12 +116,12 @@ void createRegister(){
   }
 
   rewind(fp);
-  //unity.value = LAMBIDA;
-  //unity.pointer = LAMBIDA;
+  unity.value = LAMBIDA;
+  unity.pointer = LAMBIDA;
 
-  //for(i = 0; i < MAXREGISTER ;i++){
-    //if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
-      //printf("Erro na escrita do arquivo");
-  //}
+  for(i = 0; i < MAXREGISTER ;i++){
+    if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo");
+  }
   fclose(fp); 
 }
