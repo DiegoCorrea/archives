@@ -3,7 +3,7 @@
 # include <stdlib.h>
 
 # define MAXREGISTER 11
-static const char DIR[30] = "files/primaryKeySearch.bin";
+static const char DIR[30] = "files/lisch.bin";
 static const int LAMBIDA = -1;
 int r = MAXREGISTER - 1;
 
