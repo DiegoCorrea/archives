@@ -5,7 +5,6 @@
 # define MAXREGISTER 11
 static const char DIR[30] = "files/openAddressing.bin";
 static const int LAMBIDA = -1;
-int r = MAXREGISTER - 1;
 
 struct Unity{
   int value;
