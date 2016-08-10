@@ -32,7 +32,7 @@ int main() {
 
 void save(int input){
   FILE *fp, *fpW;
-  int hashing, h2, jump = 0, positionPointer;
+  int hashing, h2, jump = 0, positionPointer, prevPointer;
   struct Unity walker;
 
   if((fp = fopen(DIR, "r+")) == NULL){
@@ -47,39 +47,40 @@ void save(int input){
   positionPointer = hashing;
   fseek(fp,hashing*sizeof(struct Unity),SEEK_SET);
   fread(&walker, sizeof(struct Unity), 1,fp);
+  fseek(fp,-sizeof(struct Unity),SEEK_CUR);
 
-  if(walker.value == LAMBIDA){  
-    fseek(fp,-sizeof(struct Unity),SEEK_CUR);
+  if(walker.value == LAMBIDA){
     if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
       printf("Erro na escrita do arquivo"); 
     else
       printf("Registro salvo com sucesso\n");
-  } else{
-    fread(&walker, sizeof(struct Unity), 1,fp);
-    fseek(fp,-sizeof(struct Unity),SEEK_CUR);
-    positionPointer++;
-
-    if(walker.value != LAMBIDA){
-      h2 = input/MAXREGISTER;
-      do{
-        if(walker.pointer == LAMBIDA)
-          fpW = fp;
-        positionPointer += h2;
-        jump++;
-        if(positionPointer >= MAXREGISTER){
-          positionPointer = positionPointer % MAXREGISTER;
-          rewind(fp);
-        }
-        fseek(fp,(positionPointer)*sizeof(struct Unity),SEEK_SET);
-        fread(&walker, sizeof(struct Unity), 1,fp);
-        fseek(fp,-sizeof(struct Unity),SEEK_CUR);
-      }while(walker.value != LAMBIDA);
-    }
+  } else {
+    h2 = walker.value/MAXREGISTER;
+    jump++;
     
+    while(walker.value != LAMBIDA){
+      if(walker.pointer == LAMBIDA){
+        prevPointer = positionPointer;
+      }
+      fseek(fp,hashing*sizeof(struct Unity),SEEK_SET);
+      fread(&walker, sizeof(struct Unity), 1,fp);
+      fseek(fp,-sizeof(struct Unity),SEEK_CUR);
+    }
+
     if(fwrite(&unity, sizeof(struct Unity), 1,fp) != 1)
       printf("Erro na escrita do arquivo");
     else
       printf("Registro %d salvo com sucesso\n", unity.value);
+
+    fseek(fp,(prevPointer)*sizeof(struct Unity),SEEK_SET);
+    fread(&walker, sizeof(struct Unity), 1,fp);
+    fseek(fp,-sizeof(struct Unity),SEEK_CUR);
+    walker.pointer = jump;
+
+    if(fwrite(&walker, sizeof(struct Unity), 1,fp) != 1)
+      printf("Erro na escrita do arquivo");
+    else
+      printf("Registro %d salvo com sucesso\n", walker.value);
   }
   
   fclose(fp);     
