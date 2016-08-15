@@ -3,7 +3,7 @@
 # include <stdlib.h>
 
 # define MAXREGISTER 11
-static const char DIR[30] = "files/openAddressing.bin";
+static const char DIR[30] = "files/computedChaiming.bin";
 static const int LAMBIDA = -1;
 
 struct Unity{
@@ -57,6 +57,11 @@ void save(int input){
   } else {
     h2 = walker.value/MAXREGISTER;
     jump++;
+
+    if(walker.pointer == LAMBIDA){
+
+    }
+
     
     while(walker.value != LAMBIDA){
       if(walker.pointer == LAMBIDA){
