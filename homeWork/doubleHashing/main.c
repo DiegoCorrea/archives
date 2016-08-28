@@ -23,7 +23,8 @@ typedef struct Register{
 }Register;
 
 
-void save(int );
+void insertReg();
+void save(int key, char name[MAXNAME], int age);
 
 void listAll();
 
@@ -42,6 +43,7 @@ int main() {
     switch(choice){
       case INSERT:
         printf("Insert\n");
+        insertReg();
         printf("\n");
       break;
 
@@ -100,42 +102,48 @@ void createRegister(){
   fclose(fp); 
 }
 
-void save(int value){
+void save(int key, char name[MAXNAME], int age){
   FILE *fp;
-  int hashing, hashingOne, hashingTwo, walker, i = 0;
+  Register walker, newREG;
+  int hashing, hashingOne, hashingTwo, i = 0;
 
   if((fp = fopen(DIR, "r+")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);    
   }
 
-  hashingOne = value % MAXREGISTER;
-  hashingTwo = value/MAXREGISTER;
-  printf("\tInserindo valor %d -> hash: %d \n", value, hashingOne);
+  newREG.key = key;
+  newREG.age = age;
+  strcpy(newREG.name,name);
 
-  fseek(fp,(hashingOne)*sizeof(int),SEEK_SET);
-  fread(&walker,sizeof(int),1,fp);
-  printf("Encontrei: %d\n", walker);
+  hashingOne = key % MAXREGISTER;
+  hashingTwo = key/MAXREGISTER;
+
+  fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
+  fread(&walker,sizeof(Register),1,fp);
   
-  while(walker != EMPTY){
-    i++;
-
+  for(i = 0; walker.key != EMPTY; i++){
     hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
-    
-    printf("Hashing is: %d, i: %d\n",hashing,i);
 
-    fseek(fp,(hashing)*sizeof(int),SEEK_SET);
-    fread(&walker,sizeof(int), 1,fp);
-    printf("Encontrei: %d\n", walker);
+    fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
+    fread(&walker,sizeof(Register), 1,fp);
   }
 
-  fseek(fp,-sizeof(int),SEEK_CUR);
-  if(fwrite(&value,sizeof(int),1,fp) != 1)
+  fseek(fp,-sizeof(Register),SEEK_CUR);
+  if(fwrite(&newREG,sizeof(Register),1,fp) != 1)
     printf("Erro na escrita do arquivo"); 
   else
     printf("Registro salvo com sucesso\n");
 
   fclose(fp);     
+}
+
+void insertReg(){
+  int key, age;
+  char name[MAXNAME];
+  scanf("%d",&key);
+  scanf("%[^\n]s",name);
+  scanf("%d",&age);
 }
 
 void listAll(){
