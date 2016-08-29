@@ -215,7 +215,7 @@ void search(int input){
 void counterAccess(){
   FILE *fp;
   Register walker, toCountSearch;
-  int i, count = 0, hashing, hashingOne, hashingTwo;
+  int i, countAccess = 0, countRegister = 0, hashing, hashingOne, hashingTwo;
   float media;
 
   if((fp = fopen(DIR, "r")) == NULL) {
@@ -228,7 +228,8 @@ void counterAccess(){
   for(i = 0; i < MAXREGISTER ;i++){    
     if(fread(&toCountSearch,sizeof(Register),1,fp) == 1 && toCountSearch.key != EMPTY) {
 
-      count++;
+      countAccess++;
+      countRegister++;
 
       hashingOne = toCountSearch.key % MAXREGISTER;
       hashingTwo = toCountSearch.key/MAXREGISTER;
@@ -242,7 +243,7 @@ void counterAccess(){
         fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
         fread(&walker,sizeof(Register), 1,fp);
 
-        count++;
+        countAccess++;
       }
 
     } else {
@@ -251,7 +252,7 @@ void counterAccess(){
   }
   fclose(fp);
 
-  media = count/MAXREGISTER;
+  media = countAccess/countRegister;
 
   printf("%.2f\n", media);
 }
