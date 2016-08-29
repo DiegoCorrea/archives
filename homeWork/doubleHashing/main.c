@@ -11,10 +11,9 @@
 # define ACCESS 'm'
 # define EXIT 'e'
 
-# define MAXNAME 20
+# define MAXNAME 21
 # define EMPTY -1
-
-int MAXREGISTER = 11;
+# define MAXREGISTER 11
 
 typedef struct Register{
   int key;
@@ -27,6 +26,7 @@ void insertReg();
 void save(int key, char name[MAXNAME], int age);
 
 void listAll();
+void counterAccess();
 
 void createRegister();
 void search(int input);
@@ -67,11 +67,13 @@ int main() {
 
       case ACCESS:
         printf("Access\n");
+        counterAccess();
         printf("\n");
       break;
 
       default:
         printf("Entrada Inválida\n");
+      break;
     }
     getchar();
   }
@@ -127,6 +129,9 @@ void save(int key, char name[MAXNAME], int age){
 
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
+
+    if(newREG.key == walker.key)
+      printf("chave ja existente: %d\n", key);
   }
 
   fseek(fp,-sizeof(Register),SEEK_CUR);
@@ -140,10 +145,14 @@ void save(int key, char name[MAXNAME], int age){
 
 void insertReg(){
   int key, age;
-  char name[MAXNAME];
-  scanf("%d",&key);
-  scanf("%[^\n]s",name);
-  scanf("%d",&age);
+  char nameInput[MAXNAME];
+
+  scanf("%d", &key);
+  scanf(" %[^\n]s", nameInput);
+  scanf("%d", &age);
+
+  printf("%d -- %s -- %d\n", key, nameInput, age);
+  save(key, nameInput, age);
 }
 
 void listAll(){
@@ -201,5 +210,48 @@ void search(int input){
   }else{
     printf("chave nao encontrada: %d\n",input);
   }
+}
 
+void counterAccess(){
+  FILE *fp;
+  Register walker, toCountSearch;
+  int i, count = 0, hashing, hashingOne, hashingTwo;
+  float media;
+
+  if((fp = fopen(DIR, "r")) == NULL) {
+    printf("Erro na abertura do arquivo");
+    exit(1);
+  }
+
+  rewind(fp);
+
+  for(i = 0; i < MAXREGISTER ;i++){    
+    if(fread(&toCountSearch,sizeof(Register),1,fp) == 1 && toCountSearch.key != EMPTY) {
+
+      count++;
+
+      hashingOne = toCountSearch.key % MAXREGISTER;
+      hashingTwo = toCountSearch.key/MAXREGISTER;
+
+      fseek(fp,(hashingOne)*sizeof(int),SEEK_SET);
+      fread(&walker,sizeof(int),1,fp);
+
+      while(walker.key != toCountSearch.key){
+        hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+
+        fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
+        fread(&walker,sizeof(Register), 1,fp);
+
+        count++;
+      }
+
+    } else {
+      printf("Erro! Contador não pode ser impresso");
+    }
+  }
+  fclose(fp);
+
+  media = count/MAXREGISTER;
+
+  printf("%.2f\n", media);
 }
