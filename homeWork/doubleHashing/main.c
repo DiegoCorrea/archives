@@ -41,21 +41,16 @@ int main() {
 
   createRegister();
   while(choice != EXIT){
-    printf("Enter:\n");
     scanf("%c", &choice);
 
     switch(choice){
       case INSERT:
-        printf("Insert\n");
         insertReg();
-        printf("\n");
       break;
 
       case SEARCH:
-        printf("Search\n");
         scanf("%d", &input);
         search(input);
-        printf("\n");
       break;
 
       case REMOVE:
@@ -66,9 +61,7 @@ int main() {
       break;
 
       case LISTALL:
-        printf("Print\n");
         listAll();
-        printf("\n");
       break;
 
       case ACCESS:
@@ -140,15 +133,15 @@ void save(int key, char name[MAXNAME], int age){
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
 
-    if(newREG.key == walker.key)
+    if(newREG.key == walker.key){
       printf("chave ja existente: %d\n", key);
+      return;
+    }
   }
 
   fseek(fp,-sizeof(Register),SEEK_CUR);
   if(fwrite(&newREG,sizeof(Register),1,fp) != 1)
     printf("Erro na escrita do arquivo"); 
-  else
-    printf("Registro salvo com sucesso\n");
 
   fclose(fp);     
 }
@@ -158,10 +151,9 @@ void insertReg(){
   char nameInput[MAXNAME];
 
   scanf("%d", &key);
-  scanf("%s", nameInput);
+  scanf(" %[^\n]s", nameInput);
   scanf("%d", &age);
 
-  printf("%d -- %s -- %d\n", key, nameInput, age);
   save(key, nameInput, age);
 }
 
