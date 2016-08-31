@@ -63,9 +63,7 @@ int main() {
       break;
 
       case ACCESS:
-        printf("Access\n");
         counterAccess();
-        printf("\n");
       break;
 
       case EXIT:
@@ -209,12 +207,13 @@ void search(int input){
   }else{
     printf("chave nao encontrada: %d\n",input);
   }
+  fclose(fp);
 }
 
 void counterAccess(){
   FILE *fp;
   Register walker, toCountSearch;
-  int i, countAccess = 0, countRegister = 0, hashing, hashingOne, hashingTwo;
+  int i, countAccess = 0, countRegister = 0, totalAccess = 0, hashing, hashingOne, hashingTwo;
   float media;
 
   if((fp = fopen(DIR, "r")) == NULL) {
@@ -224,10 +223,12 @@ void counterAccess(){
 
   rewind(fp);
 
-  for(i = 0; i < MAXREGISTER ;i++){    
+  for(i = 0; i < MAXREGISTER ;i++){
+    fseek(fp,(i)*sizeof(Register),SEEK_SET);
     if(fread(&toCountSearch,sizeof(Register),1,fp) == 1) {
       if(toCountSearch.key != EMPTY){
-        countAccess++;
+
+        countAccess = 1;
         countRegister++;
 
         hashingOne = toCountSearch.key % MAXREGISTER;
@@ -237,23 +238,23 @@ void counterAccess(){
         fread(&walker,sizeof(Register),1,fp);
 
         while(walker.key != toCountSearch.key){
-          hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+          hashing = (hashingOne + (countAccess*hashingTwo)) % MAXREGISTER;
 
           fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
           fread(&walker,sizeof(Register), 1,fp);
 
           countAccess++;
         }
+        totalAccess = totalAccess + countAccess;
       }
     } else {
       printf("Erro! Contador não pode ser impresso");
     }
   }
+  media = ((float)totalAccess/countRegister);
+  printf("%.1f\n", media);
+
   fclose(fp);
-
-  media = countAccess/countRegister;
-
-  printf("%.2f\n", media);
 }
 
 void removeRegister(int input){
