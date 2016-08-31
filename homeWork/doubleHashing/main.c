@@ -13,6 +13,8 @@
 
 # define MAXNAME 21
 # define EMPTY -1
+
+//TAMANHO_ARQUIVO
 # define MAXREGISTER 11
 
 typedef struct Register{
@@ -30,6 +32,8 @@ void counterAccess();
 
 void createRegister();
 void search(int input);
+
+void removeRegister(int input);
 
 int main() {
   char choice = 's';
@@ -56,6 +60,8 @@ int main() {
 
       case REMOVE:
         printf("Remove\n");
+        scanf("%d", &input);
+        removeRegister(input);
         printf("\n");
       break;
 
@@ -69,6 +75,10 @@ int main() {
         printf("Access\n");
         counterAccess();
         printf("\n");
+      break;
+
+      case EXIT:
+      printf("Saindo\n");
       break;
 
       default:
@@ -93,8 +103,8 @@ void createRegister(){
 
   rewind(fp);
 
-  newREG.key = -1;
-  newREG.age = -1;
+  newREG.key = EMPTY;
+  newREG.age = EMPTY;
   bzero(newREG.name, MAXNAME*(sizeof(char)));
 
   for(i = 0; i < MAXREGISTER ;i++){
@@ -148,7 +158,7 @@ void insertReg(){
   char nameInput[MAXNAME];
 
   scanf("%d", &key);
-  scanf(" %[^\n]s", nameInput);
+  scanf("%s", nameInput);
   scanf("%d", &age);
 
   printf("%d -- %s -- %d\n", key, nameInput, age);
@@ -193,8 +203,8 @@ void search(int input){
   hashingOne = input % MAXREGISTER;
   hashingTwo = input/MAXREGISTER;
 
-  fseek(fp,(hashingOne)*sizeof(int),SEEK_SET);
-  fread(&walker,sizeof(int),1,fp);
+  fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
+  fread(&walker,sizeof(Register),1,fp);
 
   for(i = 1; walker.key != EMPTY && walker.key != input && i < MAXREGISTER; i++){
     hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
@@ -203,7 +213,7 @@ void search(int input){
     fread(&walker,sizeof(Register), 1,fp);
   }
 
-  if(walker.key != EMPTY && i < MAXREGISTER){
+  if(walker.key == input){
     printf("chave: %d\n", walker.key);
     printf("%s\n", walker.name);
     printf("%d\n", walker.age);
@@ -226,26 +236,26 @@ void counterAccess(){
   rewind(fp);
 
   for(i = 0; i < MAXREGISTER ;i++){    
-    if(fread(&toCountSearch,sizeof(Register),1,fp) == 1 && toCountSearch.key != EMPTY) {
-
-      countAccess++;
-      countRegister++;
-
-      hashingOne = toCountSearch.key % MAXREGISTER;
-      hashingTwo = toCountSearch.key/MAXREGISTER;
-
-      fseek(fp,(hashingOne)*sizeof(int),SEEK_SET);
-      fread(&walker,sizeof(int),1,fp);
-
-      while(walker.key != toCountSearch.key){
-        hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
-
-        fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
-        fread(&walker,sizeof(Register), 1,fp);
-
+    if(fread(&toCountSearch,sizeof(Register),1,fp) == 1) {
+      if(toCountSearch.key != EMPTY){
         countAccess++;
-      }
+        countRegister++;
 
+        hashingOne = toCountSearch.key % MAXREGISTER;
+        hashingTwo = toCountSearch.key/MAXREGISTER;
+
+        fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
+        fread(&walker,sizeof(Register),1,fp);
+
+        while(walker.key != toCountSearch.key){
+          hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+
+          fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
+          fread(&walker,sizeof(Register), 1,fp);
+
+          countAccess++;
+        }
+      }
     } else {
       printf("Erro! Contador não pode ser impresso");
     }
@@ -255,4 +265,42 @@ void counterAccess(){
   media = countAccess/countRegister;
 
   printf("%.2f\n", media);
+}
+
+void removeRegister(int input){
+  FILE *fp;
+  Register walker;
+  int i, hashing, hashingOne, hashingTwo;
+
+  if((fp = fopen(DIR, "r+")) == NULL) {
+    printf("Erro na abertura do arquivo");
+    exit(1);
+  }
+
+  hashingOne = input % MAXREGISTER;
+  hashingTwo = input/MAXREGISTER;
+
+  fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
+  fread(&walker,sizeof(Register),1,fp);
+
+  for(i = 1; walker.key != EMPTY && walker.key != input && i < MAXREGISTER; i++){
+    hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+
+    fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
+    fread(&walker,sizeof(Register), 1,fp);
+  }
+
+  if(walker.key == input){
+    walker.key = EMPTY;
+    walker.age = EMPTY;
+    bzero(walker.name, MAXNAME*(sizeof(char)));
+
+    fseek(fp,-sizeof(Register),SEEK_SET);
+    if(fwrite(&walker,sizeof(Register),1,fp) != 1)
+      printf("Erro na escrita do arquivo"); 
+    else
+      printf("Registro salvo com sucesso\n");
+  }else{
+    printf("chave nao encontrada: %d\n",input);
+  }
 }
