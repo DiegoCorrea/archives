@@ -54,10 +54,8 @@ int main() {
       break;
 
       case REMOVE:
-        printf("Remove\n");
         scanf("%d", &input);
         removeRegister(input);
-        printf("\n");
       break;
 
       case LISTALL:
@@ -71,7 +69,6 @@ int main() {
       break;
 
       case EXIT:
-      printf("Saindo\n");
       break;
 
       default:
@@ -287,12 +284,11 @@ void removeRegister(int input){
     walker.age = EMPTY;
     bzero(walker.name, MAXNAME*(sizeof(char)));
 
-    fseek(fp,-sizeof(Register),SEEK_SET);
+    fseek(fp,-sizeof(Register),SEEK_CUR);
     if(fwrite(&walker,sizeof(Register),1,fp) != 1)
       printf("Erro na escrita do arquivo"); 
-    else
-      printf("Registro salvo com sucesso\n");
   }else{
     printf("chave nao encontrada: %d\n",input);
   }
+  fclose(fp);
 }
