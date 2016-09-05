@@ -25,6 +25,7 @@ typedef struct Register{
 
 
 void insertReg();
+void startFileRead();
 void save(int key, char name[MAXNAME], int age);
 
 void listAll();
@@ -39,7 +40,7 @@ int main() {
   char choice = 's';
   int input;
 
-  createRegister();
+  startFileRead();
   while(choice != EXIT){
     scanf("%c", &choice);
 
@@ -84,7 +85,7 @@ void createRegister(){
   Register newREG;
   int i;
 
-  if((fp = fopen(DIR, "w")) == NULL) {
+  if((fp = fopen(DIR, "w+")) == NULL) {
     printf("Erro na abertura do arquivo");
     exit(1);
   }
@@ -100,6 +101,14 @@ void createRegister(){
       printf("Erro na escrita do arquivo");
   }
   fclose(fp); 
+}
+
+void startFileRead(){
+  FILE *fp;
+  if((fp = fopen(DIR, "r")) == NULL){
+    createRegister();
+  }else
+    fclose(fp);
 }
 
 void save(int key, char name[MAXNAME], int age){
@@ -122,22 +131,21 @@ void save(int key, char name[MAXNAME], int age){
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
   
-  for(i = 0; walker.key != EMPTY; i++){
+  for(i = 0; walker.key != EMPTY && newREG.key != walker.key && i < MAXREGISTER; i++){
     hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
 
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
-
-    if(newREG.key == walker.key){
-      printf("chave ja existente: %d\n", key);
-      return;
-    }
   }
-
-  fseek(fp,-sizeof(Register),SEEK_CUR);
-  if(fwrite(&newREG,sizeof(Register),1,fp) != 1)
-    printf("Erro na escrita do arquivo"); 
-
+  if(newREG.key == walker.key){
+    printf("chave ja existente: %d\n", key);
+    return;
+  }
+  if(walker.key == EMPTY){
+    fseek(fp,-sizeof(Register),SEEK_CUR);
+    if(fwrite(&newREG,sizeof(Register),1,fp) != 1)
+      printf("Erro na escrita do arquivo"); 
+  }
   fclose(fp);     
 }
 
