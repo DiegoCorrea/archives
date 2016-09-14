@@ -2,8 +2,10 @@
 # include <string.h>
 # include <stdlib.h>
 
+//caminho onde estará salvo o arquivo binario
 # define DIR "doubleHashing.bin"
 
+//Alias para as escolhas do menu
 # define INSERT 'i'
 # define SEARCH 'c'
 # define REMOVE 'r'
@@ -11,19 +13,26 @@
 # define ACCESS 'm'
 # define EXIT 'e'
 
+//Tamanho maximo da variavel de nome
 # define MAXNAME 21
+
+//Valor para variavel vazia
 # define EMPTY -1
 
 //TAMANHO_ARQUIVO
-# define MAXREGISTER 11
+# define TAMANHO_ARQUIVO 11
 
+//Caso a divisão da hash 2 dê zero
+# define ESPECIALCASEHASHINGTWO 0
+
+//Registro que será usado
 typedef struct Register{
   int key;
   char name[MAXNAME];
   int age;
 }Register;
 
-
+//declaração das funcções que serão usadas
 void insertReg();
 void startFileRead();
 void save(int key, char name[MAXNAME], int age);
@@ -96,7 +105,7 @@ void createRegister(){
   newREG.age = EMPTY;
   bzero(newREG.name, MAXNAME*(sizeof(char)));
 
-  for(i = 0; i < MAXREGISTER ;i++){
+  for(i = 0; i < TAMANHO_ARQUIVO ;i++){
     if(fwrite(&newREG,sizeof(newREG),1,fp) != 1)
       printf("Erro na escrita do arquivo");
   }
@@ -125,14 +134,18 @@ void save(int key, char name[MAXNAME], int age){
   newREG.age = age;
   strcpy(newREG.name,name);
 
-  hashingOne = key % MAXREGISTER;
-  hashingTwo = key/MAXREGISTER;
+  hashingOne = key % TAMANHO_ARQUIVO;
+  hashingTwo = key/TAMANHO_ARQUIVO;
+
+  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+    hashingTwo = 1;
+  }
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
   
-  for(i = 0; walker.key != EMPTY && newREG.key != walker.key && i < MAXREGISTER; i++){
-    hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+  for(i = 0; walker.key != EMPTY && newREG.key != walker.key && i < TAMANHO_ARQUIVO; i++){
+    hashing = (hashingOne + (i*hashingTwo)) % TAMANHO_ARQUIVO;
 
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
@@ -172,7 +185,7 @@ void listAll(){
 
   rewind(fp);
 
-  for(i = 0; i < MAXREGISTER ;i++){
+  for(i = 0; i < TAMANHO_ARQUIVO ;i++){
     if(fread(&walker,sizeof(Register),1,fp) == 1) {
       if(walker.key != EMPTY)
         printf("%d: %d %s %d\n", i, walker.key, walker.name, walker.age);
@@ -195,14 +208,18 @@ void search(int input){
     exit(1);
   }
 
-  hashingOne = input % MAXREGISTER;
-  hashingTwo = input/MAXREGISTER;
+  hashingOne = input % TAMANHO_ARQUIVO;
+  hashingTwo = input/TAMANHO_ARQUIVO;
+
+  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+    hashingTwo = 1;
+  }
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
 
-  for(i = 1; walker.key != EMPTY && walker.key != input && i < MAXREGISTER; i++){
-    hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+  for(i = 1; walker.key != EMPTY && walker.key != input && i < TAMANHO_ARQUIVO; i++){
+    hashing = (hashingOne + (i*hashingTwo)) % TAMANHO_ARQUIVO;
 
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
@@ -231,7 +248,7 @@ void counterAccess(){
 
   rewind(fp);
 
-  for(i = 0; i < MAXREGISTER ;i++){
+  for(i = 0; i < TAMANHO_ARQUIVO ;i++){
     fseek(fp,(i)*sizeof(Register),SEEK_SET);
     if(fread(&toCountSearch,sizeof(Register),1,fp) == 1) {
       if(toCountSearch.key != EMPTY){
@@ -239,14 +256,18 @@ void counterAccess(){
         countAccess = 1;
         countRegister++;
 
-        hashingOne = toCountSearch.key % MAXREGISTER;
-        hashingTwo = toCountSearch.key/MAXREGISTER;
+        hashingOne = toCountSearch.key % TAMANHO_ARQUIVO;
+        hashingTwo = toCountSearch.key/TAMANHO_ARQUIVO;
+
+        if(hashingTwo == ESPECIALCASEHASHINGTWO){
+          hashingTwo = 1;
+        }
 
         fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
         fread(&walker,sizeof(Register),1,fp);
 
         while(walker.key != toCountSearch.key){
-          hashing = (hashingOne + (countAccess*hashingTwo)) % MAXREGISTER;
+          hashing = (hashingOne + (countAccess*hashingTwo)) % TAMANHO_ARQUIVO;
 
           fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
           fread(&walker,sizeof(Register), 1,fp);
@@ -275,14 +296,18 @@ void removeRegister(int input){
     exit(1);
   }
 
-  hashingOne = input % MAXREGISTER;
-  hashingTwo = input/MAXREGISTER;
+  hashingOne = input % TAMANHO_ARQUIVO;
+  hashingTwo = input/TAMANHO_ARQUIVO;
+
+  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+    hashingTwo = 1;
+  }
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
 
-  for(i = 1; walker.key != EMPTY && walker.key != input && i < MAXREGISTER; i++){
-    hashing = (hashingOne + (i*hashingTwo)) % MAXREGISTER;
+  for(i = 1; walker.key != EMPTY && walker.key != input && i < TAMANHO_ARQUIVO; i++){
+    hashing = (hashingOne + (i*hashingTwo)) % TAMANHO_ARQUIVO;
 
     fseek(fp,(hashing)*sizeof(Register),SEEK_SET);
     fread(&walker,sizeof(Register), 1,fp);
