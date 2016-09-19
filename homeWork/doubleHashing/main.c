@@ -140,6 +140,7 @@ void save(int key, char name[MAXNAME], int age){
   if(hashingTwo == ESPECIALCASEHASHINGTWO){
     hashingTwo = 1;
   }
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
@@ -215,6 +216,8 @@ void search(int input){
     hashingTwo = 1;
   }
 
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
+
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
 
@@ -263,6 +266,8 @@ void counterAccess(){
           hashingTwo = 1;
         }
 
+        hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
+
         fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
         fread(&walker,sizeof(Register),1,fp);
 
@@ -302,6 +307,8 @@ void removeRegister(int input){
   if(hashingTwo == ESPECIALCASEHASHINGTWO){
     hashingTwo = 1;
   }
+
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
