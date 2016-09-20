@@ -45,7 +45,7 @@ void search(int input);
 
 void removeRegister(int input);
 
-int main() {
+int main(){
   char choice = 's';
   int input;
 
@@ -94,7 +94,7 @@ void createRegister(){
   Register newREG;
   int i;
 
-  if((fp = fopen(DIR, "w+")) == NULL) {
+  if((fp = fopen(DIR, "w+")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);
   }
@@ -136,11 +136,12 @@ void save(int key, char name[MAXNAME], int age){
 
   hashingOne = key % TAMANHO_ARQUIVO;
   hashingTwo = key/TAMANHO_ARQUIVO;
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
+
 
   if(hashingTwo == ZERO){
     hashingTwo = 1;
-  }
-  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
+  }  
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
@@ -154,11 +155,10 @@ void save(int key, char name[MAXNAME], int age){
   if(newREG.key == walker.key){
     printf("chave ja existente: %d\n", key);
     return;
-  }
-  if(walker.key == EMPTY){
+  }else if(walker.key == EMPTY){
     fseek(fp,-sizeof(Register),SEEK_CUR);
     if(fwrite(&newREG,sizeof(Register),1,fp) != 1)
-      printf("Erro na escrita do arquivo"); 
+      printf("Erro na escrita do arquivo");    
   }
   fclose(fp);     
 }
@@ -179,7 +179,7 @@ void listAll(){
   Register walker;
   int i;
 
-  if((fp = fopen(DIR, "r")) == NULL) {
+  if((fp = fopen(DIR, "r")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);
   }
@@ -187,12 +187,12 @@ void listAll(){
   rewind(fp);
 
   for(i = 0; i < TAMANHO_ARQUIVO ;i++){
-    if(fread(&walker,sizeof(Register),1,fp) == 1) {
+    if(fread(&walker,sizeof(Register),1,fp) == 1){
       if(walker.key != EMPTY)
         printf("%d: %d %s %d\n", i, walker.key, walker.name, walker.age);
       else
         printf("%d: vazio\n", i);
-    } else {
+    }else{
       printf("Erro! Sequência não pode ser impressa");
     }
   }
@@ -204,19 +204,18 @@ void search(int input){
   Register walker;
   int i, hashing, hashingOne, hashingTwo;
 
-  if((fp = fopen(DIR, "r")) == NULL) {
+  if((fp = fopen(DIR, "r")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);
   }
 
   hashingOne = input % TAMANHO_ARQUIVO;
   hashingTwo = input/TAMANHO_ARQUIVO;
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
   if(hashingTwo == ZERO){
     hashingTwo = 1;
   }
-
-  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
@@ -253,7 +252,7 @@ void counterAccess(){
 
   for(i = 0; i < TAMANHO_ARQUIVO ;i++, countAccess = 0){
     fseek(fp,(i)*sizeof(Register),SEEK_SET);
-    if(fread(&toCountSearch,sizeof(Register),1,fp) == 1) {
+    if(fread(&toCountSearch,sizeof(Register),1,fp) == 1){
       if(toCountSearch.key != EMPTY){
 
         countAccess = 1;
@@ -261,12 +260,11 @@ void counterAccess(){
 
         hashingOne = toCountSearch.key % TAMANHO_ARQUIVO;
         hashingTwo = toCountSearch.key/TAMANHO_ARQUIVO;
+        hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
         if(hashingTwo == ZERO){
           hashingTwo = 1;
         }
-
-        hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
         fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
         fread(&walker,sizeof(Register),1,fp);
@@ -285,10 +283,12 @@ void counterAccess(){
       printf("Erro! Contador não pode ser impresso");
     }
   }
-  if(countAccess != ZERO)
+  if(totalAccess != ZERO){
     media = ((float)totalAccess/countRegister);
-  else
+  }else{
     media = 0.0;
+  }
+
   printf("%.1f\n", media);
 
   fclose(fp);
@@ -299,19 +299,19 @@ void removeRegister(int input){
   Register walker;
   int i, hashing, hashingOne, hashingTwo;
 
-  if((fp = fopen(DIR, "r+")) == NULL) {
+  if((fp = fopen(DIR, "r+")) == NULL){
     printf("Erro na abertura do arquivo");
     exit(1);
   }
 
   hashingOne = input % TAMANHO_ARQUIVO;
   hashingTwo = input/TAMANHO_ARQUIVO;
+  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
+
 
   if(hashingTwo == ZERO){
     hashingTwo = 1;
   }
-
-  hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
 
   fseek(fp,(hashingOne)*sizeof(Register),SEEK_SET);
   fread(&walker,sizeof(Register),1,fp);
