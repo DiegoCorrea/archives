@@ -23,7 +23,7 @@
 # define TAMANHO_ARQUIVO 11
 
 //Caso a divisão da hash 2 dê zero
-# define ESPECIALCASEHASHINGTWO 0
+# define ZERO 0
 
 //Registro que será usado
 typedef struct Register{
@@ -137,7 +137,7 @@ void save(int key, char name[MAXNAME], int age){
   hashingOne = key % TAMANHO_ARQUIVO;
   hashingTwo = key/TAMANHO_ARQUIVO;
 
-  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+  if(hashingTwo == ZERO){
     hashingTwo = 1;
   }
   hashingTwo = hashingTwo % TAMANHO_ARQUIVO;
@@ -212,7 +212,7 @@ void search(int input){
   hashingOne = input % TAMANHO_ARQUIVO;
   hashingTwo = input/TAMANHO_ARQUIVO;
 
-  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+  if(hashingTwo == ZERO){
     hashingTwo = 1;
   }
 
@@ -251,7 +251,7 @@ void counterAccess(){
 
   rewind(fp);
 
-  for(i = 0; i < TAMANHO_ARQUIVO ;i++){
+  for(i = 0; i < TAMANHO_ARQUIVO ;i++, countAccess = 0){
     fseek(fp,(i)*sizeof(Register),SEEK_SET);
     if(fread(&toCountSearch,sizeof(Register),1,fp) == 1) {
       if(toCountSearch.key != EMPTY){
@@ -262,7 +262,7 @@ void counterAccess(){
         hashingOne = toCountSearch.key % TAMANHO_ARQUIVO;
         hashingTwo = toCountSearch.key/TAMANHO_ARQUIVO;
 
-        if(hashingTwo == ESPECIALCASEHASHINGTWO){
+        if(hashingTwo == ZERO){
           hashingTwo = 1;
         }
 
@@ -285,7 +285,10 @@ void counterAccess(){
       printf("Erro! Contador não pode ser impresso");
     }
   }
-  media = ((float)totalAccess/countRegister);
+  if(countAccess != ZERO)
+    media = ((float)totalAccess/countRegister);
+  else
+    media = 0.0;
   printf("%.1f\n", media);
 
   fclose(fp);
@@ -304,7 +307,7 @@ void removeRegister(int input){
   hashingOne = input % TAMANHO_ARQUIVO;
   hashingTwo = input/TAMANHO_ARQUIVO;
 
-  if(hashingTwo == ESPECIALCASEHASHINGTWO){
+  if(hashingTwo == ZERO){
     hashingTwo = 1;
   }
 
