@@ -1,0 +1,632 @@
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: vazio
+10: vazio
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+chave ja existente: 42
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: vazio
+3: 64 Terceira pessoa 900
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: 43 Mais alguem 20
+3: 64 Terceira pessoa 900
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: 43 Mais alguem 20
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: 43 Mais alguem 20
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+chave: 70
+Ola mundo
+30
+chave nao encontrada: 20
+chave: 42
+Jonathan Queiroz
+21
+chave nao encontrada: 1
+0: vazio
+1: vazio
+2: 43 Mais alguem 20
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: vazio
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: vazio
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: vazio
+7: vazio
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: vazio
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: vazio
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: vazio
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: vazio
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+chave ja existente: 70
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: 30 Teste 123
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+chave: 9
+Outra pessoa
+400
+chave: 42
+Jonathan Queiroz
+21
+chave nao encontrada: 51
+chave: 66
+Alguem6
+17
+chave: 65
+Alguem5
+16
+chave: 70
+Ola mundo
+30
+chave: 60
+Alguem
+12
+chave: 61
+Alguem2
+13
+chave: 62
+Alguem3
+14
+chave: 30
+Teste
+123
+chave: 9
+Outra pessoa
+400
+chave: 63
+Alguem4
+15
+chave: 64
+Terceira pessoa
+900
+chave nao encontrada: 10
+chave nao encontrada: 20
+1.9
+chave nao encontrada: 10
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: 62 Alguem3 14
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.0
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: 64 Terceira pessoa 900
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.1
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: 63 Alguem4 15
+3: vazio
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.1
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: vazio
+3: vazio
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.1
+chave nao encontrada: 63
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: vazio
+3: vazio
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.1
+chave nao encontrada: 63
+0: 66 Alguem6 17
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.1
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: 60 Alguem 12
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.3
+chave: 33
+Novo nome
+90
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: 61 Alguem2 13
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.5
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: 9 Outra pessoa 400
+2.8
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+3.0
+chave: 42
+Jonathan Queiroz
+21
+chave nao encontrada: 9
+chave: 70
+Ola mundo
+30
+chave: 33
+Novo nome
+90
+chave nao encontrada: 66
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+3.0
+chave ja existente: 33
+chave ja existente: 70
+3.0
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+3.0
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: 33 Novo nome 90
+4: 70 Ola mundo 30
+5: vazio
+6: 36 Blabla 500
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+2.8
+chave: 33
+Novo nome
+90
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: vazio
+4: 70 Ola mundo 30
+5: vazio
+6: 36 Blabla 500
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+3.0
+chave: 36
+Blabla
+500
+0: vazio
+1: 65 Alguem5 16
+2: vazio
+3: vazio
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+3.2
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: 70 Ola mundo 30
+5: vazio
+6: vazio
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+1.7
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: 64 Mais um 40
+9: 42 Jonathan Queiroz 21
+10: vazio
+2.0
+chave: 64
+Mais um
+40
+chave: 42
+Jonathan Queiroz
+21
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+1.0
+chave nao encontrada: 9
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 Jonathan Queiroz 21
+10: vazio
+1.0
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: vazio
+10: vazio
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: 42 nomemuitograndevinte 900
+10: vazio
+1.0
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: vazio
+10: vazio
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: vazio
+10: 10 nomemuitograndevinte 800
+1.0
+0: vazio
+1: vazio
+2: vazio
+3: vazio
+4: vazio
+5: vazio
+6: vazio
+7: vazio
+8: vazio
+9: vazio
+10: vazio
