@@ -26,10 +26,11 @@ int main(){
 	getchar();
 
 	std::vector<char> alphabet = alphabetExtract(pattern);
-	printVector(alphabet);
 
 	printf("Texto: %s\n", text);
 	printf("Padrão: %s\n", pattern);
+	printf("Alfabetp: ");
+	printVector(alphabet);
 
 	finiteAutomatonMatcher(textLength,text,pattern);
 	while(choice != EXIT){
