@@ -1,10 +1,17 @@
 # include <stdio.h>
 # include <iostream>
-# include <string>
+# include <string.h>
+# include <vector>
+# include <algorithm>
 
 # define SEARCH 's'
 # define PRINT 'u'
 # define EXIT 'e'
+
+void printVector(std::vector<char> v);
+void alphabetExtract(char *pattern);
+void finiteAutomatonMatcher(int textLength, char *text, char *pattern);
+void computeTransitionFunction();
 
 int main(){
 	int textLength;
@@ -18,9 +25,12 @@ int main(){
 	scanf(" %[^\n]s", pattern);
 	getchar();
 
+	alphabetExtract(pattern);
+
 	printf("Texto: %s\n", text);
 	printf("Padrão: %s\n", pattern);
 
+	finiteAutomatonMatcher(textLength,text,pattern);
 	while(choice != EXIT){
 		scanf("%c", &choice);
 		getchar();
@@ -45,4 +55,57 @@ int main(){
 		}
 	}
 	return 0;
+}
+void alphabetExtract(char *pattern){
+	int patternLength = strlen(pattern);
+	std::vector<char> ordenedPattern;
+	for (int i = 0; i < patternLength; ++i){
+		ordenedPattern.push_back(pattern[i]);
+	}
+	sort(ordenedPattern.begin(),ordenedPattern.end());
+	for(int i = 0; i < ordenedPattern.size();i++)
+		printf("%c ", ordenedPattern[i]);
+	printf("\n");
+
+	char walker = ordenedPattern[0];
+	std::vector<char> alphabet;
+	alphabet.push_back(walker);
+	printf("%c ", walker);
+	for(int i = 0; i < ordenedPattern.size();i++){
+		if (walker != ordenedPattern[i]){
+			walker = ordenedPattern[i];
+			alphabet.push_back(walker);
+			printf("%c ", walker);
+		}
+	}
+	printf("\n");
+	char space = ' ', dot = '.', comma = ',';
+
+	std::vector<char> tmp;
+	for(int i = 0; i < alphabet.size() && (alphabet[i] == space || alphabet[i] == dot || alphabet[i] == comma);i++){
+		if(alphabet[i] == space || alphabet[i] == dot || alphabet[i] == comma){
+			tmp.push_back(alphabet[i]);
+			alphabet.erase(alphabet.begin() + i);
+			i--;
+		}
+	}
+	printf("\n");
+	for(int i = tmp.size() - 1; i >= 0 ;i--){
+		alphabet.push_back(tmp[i]);
+	}
+	printVector(alphabet);
+}
+
+void printVector(std::vector<char> v){
+	for (int i = 0; i < v.size(); ++i){
+		printf("%c ", v[i]);
+	}
+	printf("\n");
+}
+
+void finiteAutomatonMatcher(int textLength, char *text, char *pattern){
+
+	for(int i = 0; i < textLength;i++){
+
+	}
 }
