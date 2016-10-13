@@ -10,8 +10,11 @@
 
 void printVector(std::vector<char> v);
 std::vector<char> alphabetExtract(char *pattern);
+
+int * computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet);
 void finiteAutomatonMatcher(int textLength, char *text, char *pattern);
-void computeTransitionFunction();
+
+void printTable(int *table,std::vector<char> alphabet, char *pattern);
 
 int main(){
 	int textLength;
@@ -29,9 +32,11 @@ int main(){
 
 	printf("Texto: %s\n", text);
 	printf("Padrão: %s\n", pattern);
-	printf("Alfabetp: ");
+	printf("Alfabeto: ");
 	printVector(alphabet);
 
+
+	int *table = computeTransitionFunction(pattern,text,alphabet);
 	finiteAutomatonMatcher(textLength,text,pattern);
 	while(choice != EXIT){
 		scanf("%c", &choice);
@@ -45,6 +50,7 @@ int main(){
 
 			case PRINT:
 				printf("IMPRIMIR TABELA\n");
+				printTable(table, alphabet, pattern);
 			break;
 
 			case EXIT:
@@ -98,9 +104,28 @@ void printVector(std::vector<char> v){
 	printf("|\n");
 }
 
+int *computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet){
+
+}
+
 void finiteAutomatonMatcher(int textLength, char *text, char *pattern){
 
 	for(int i = 0; i < textLength;i++){
 
+	}
+}
+
+void printTable(int *table, std::vector<char> alphabet, char *pattern){
+	int patternSize = strlen(pattern) + 1;
+	int alphabetSize = alphabet.size();
+	printf("Tabela Delta:\n");
+	for(int i = 0;i < patternSize;i++){
+		for(int j = 0; j < alphabetSize;j++){
+			if (alphabet[j] != ' '){
+				printf("[%d,%c]: %d\n", i, alphabet[j], table[i][j]);
+			} else{
+				printf("[%d,'%c']: %d\n", i, alphabet[j], table[i][j]);
+			}
+		}
 	}
 }
