@@ -7,14 +7,18 @@
 # define SEARCH 's'
 # define PRINT 'u'
 # define EXIT 'e'
+# define MAX_ASCII_CHAR 255
 
 void printVector(std::vector<char> v);
 std::vector<char> alphabetExtract(char *pattern);
 
-int * computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet);
+int wordState(char *pattern, int state, char letter);
+void computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]);
 void finiteAutomatonMatcher(int textLength, char *text, char *pattern);
 
-void printTable(int *table,std::vector<char> alphabet, char *pattern);
+
+void putThingsOnTable(int table[][MAX_ASCII_CHAR], std::vector<char> alphabet, char *pattern);
+void printTable(int table[][MAX_ASCII_CHAR],std::vector<char> alphabet, char *pattern);
 
 int main(){
 	int textLength;
@@ -36,8 +40,13 @@ int main(){
 	printVector(alphabet);
 
 
-	int *table = computeTransitionFunction(pattern,text,alphabet);
-	finiteAutomatonMatcher(textLength,text,pattern);
+	int states = strlen(pattern)+1;
+	int table[states][MAX_ASCII_CHAR];
+	putThingsOnTable(table, alphabet, pattern);
+
+	computeTransitionFunction(pattern,text,alphabet,table);
+
+	//finiteAutomatonMatcher(textLength,text,pattern);
 	while(choice != EXIT){
 		scanf("%c", &choice);
 		getchar();
@@ -64,6 +73,7 @@ int main(){
 	}
 	return 0;
 }
+
 std::vector<char> alphabetExtract(char *pattern){
 	int patternLength = strlen(pattern);
 	std::vector<char> ordenedPattern;
@@ -104,8 +114,41 @@ void printVector(std::vector<char> v){
 	printf("|\n");
 }
 
-int *computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet){
+int wordState(char *pattern, int actualState, char letter){
+	int patternSize = strlen(pattern);
+	int i = 0;
 
+	if (actualState < patternSize && letter == pattern[actualState]){
+		printf("%d ", actualState+1);
+		return actualState+1;
+	}
+	for(int nextStageToGo = actualState; nextStageToGo > 0; nextStageToGo--){
+		if(pattern[nextStageToGo - 1] == letter){
+			for(i = 0; i < nextStageToGo-1; i++){
+				if (pattern[i] != pattern[actualState - nextStageToGo + 1 + i])
+					break;
+			}
+			if (i == nextStageToGo - 1){
+				printf("%d ", nextStageToGo);
+				return nextStageToGo;
+			}
+		}
+	}
+	printf("0 ");
+	return 0;
+}
+
+void computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]){
+	int alphabetSize = alphabet.size();
+	int patternSize = strlen(pattern);
+
+	for(int state = 0; state <= patternSize;state++){
+		for(int letterOfAlphabet = 0; letterOfAlphabet < alphabetSize;letterOfAlphabet++){
+			table[state][letterOfAlphabet] = wordState(pattern,state,alphabet[letterOfAlphabet]);
+		}
+		printf("\n");
+	}
+	//printTable(table, alphabet, pattern);
 }
 
 void finiteAutomatonMatcher(int textLength, char *text, char *pattern){
@@ -115,7 +158,7 @@ void finiteAutomatonMatcher(int textLength, char *text, char *pattern){
 	}
 }
 
-void printTable(int *table, std::vector<char> alphabet, char *pattern){
+void printTable(int table[][MAX_ASCII_CHAR], std::vector<char> alphabet, char *pattern){
 	int patternSize = strlen(pattern) + 1;
 	int alphabetSize = alphabet.size();
 	printf("Tabela Delta:\n");
@@ -126,6 +169,16 @@ void printTable(int *table, std::vector<char> alphabet, char *pattern){
 			} else{
 				printf("[%d,'%c']: %d\n", i, alphabet[j], table[i][j]);
 			}
+		}
+	}
+}
+
+void putThingsOnTable(int table[][MAX_ASCII_CHAR], std::vector<char> alphabet, char *pattern){
+	int patternSize = strlen(pattern) + 1;
+	int alphabetSize = alphabet.size();
+	for(int i = 0;i < patternSize;i++){
+		for(int j = 0; j < alphabetSize;j++){
+			table[i][j] = 0;
 		}
 	}
 }
