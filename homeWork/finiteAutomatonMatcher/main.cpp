@@ -14,7 +14,7 @@ std::vector<char> alphabetExtract(char *pattern);
 
 int wordState(char *pattern, int state, char letter);
 void computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]);
-void finiteAutomatonMatcher(int textLength, char *text, char *pattern);
+void finiteAutomatonMatcher(char *text, char *pattern, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]);
 
 
 void putThingsOnTable(int table[][MAX_ASCII_CHAR], std::vector<char> alphabet, char *pattern);
@@ -43,7 +43,6 @@ int main(){
 
 	computeTransitionFunction(pattern,text,alphabet,table);
 
-	//finiteAutomatonMatcher(textLength,text,pattern);
 	while(choice != EXIT){
 		scanf("%c", &choice);
 		getchar();
@@ -52,6 +51,7 @@ int main(){
 		switch(choice){
 			case SEARCH:
 				printf("BUSCAR PADRÃO\n");
+				finiteAutomatonMatcher(text,pattern,alphabet,table);
 			break;
 
 			case PRINT:
@@ -114,7 +114,7 @@ void printVector(std::vector<char> v){
 int wordState(char *pattern, int actualState, char letter){
 	int patternSize = strlen(pattern);
 	int i = 0;
-
+	printf("%c \n", letter);
 	if (actualState < patternSize && letter == pattern[actualState]){
 		//printf("%d ", actualState+1);
 		return actualState+1;
@@ -140,6 +140,7 @@ void computeTransitionFunction(char *pattern, char *text, std::vector<char> alph
 	int patternSize = strlen(pattern);
 
 	for(int state = 0; state <= patternSize;state++){
+		//printf("Letter: \n");
 		for(int letterOfAlphabet = 0; letterOfAlphabet < alphabetSize;letterOfAlphabet++){
 			table[state][letterOfAlphabet] = wordState(pattern,state,alphabet[letterOfAlphabet]);
 		}
@@ -148,10 +149,16 @@ void computeTransitionFunction(char *pattern, char *text, std::vector<char> alph
 	//printTable(table, alphabet, pattern);
 }
 
-void finiteAutomatonMatcher(int textLength, char *text, char *pattern){
+void finiteAutomatonMatcher(char *text, char *pattern, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]){
+	int textLength = strlen(text);
+	int patternLength = strlen(pattern);
 
-	for(int i = 0; i < textLength;i++){
-
+	for(int i = 0, state = 0,letterPosition = 0; i < textLength;i++){
+		for(letterPosition = 0; text[i] != alphabet[letterPosition] ;letterPosition++);
+		state = table[state][letterPosition];
+		if(state == patternLength){
+			printf("%d\n", i-patternLength+2);
+		}
 	}
 }
 
