@@ -34,10 +34,7 @@ int main(){
 
 	std::vector<char> alphabet = alphabetExtract(pattern);
 
-	printf("Texto: %s\n", text);
-	printf("Padrão: %s\n", pattern);
-	printf("Alfabeto: ");
-	printVector(alphabet);
+	//printVector(alphabet);
 
 
 	int states = strlen(pattern)+1;
@@ -119,7 +116,7 @@ int wordState(char *pattern, int actualState, char letter){
 	int i = 0;
 
 	if (actualState < patternSize && letter == pattern[actualState]){
-		printf("%d ", actualState+1);
+		//printf("%d ", actualState+1);
 		return actualState+1;
 	}
 	for(int nextStageToGo = actualState; nextStageToGo > 0; nextStageToGo--){
@@ -129,12 +126,12 @@ int wordState(char *pattern, int actualState, char letter){
 					break;
 			}
 			if (i == nextStageToGo - 1){
-				printf("%d ", nextStageToGo);
+				//printf("%d ", nextStageToGo);
 				return nextStageToGo;
 			}
 		}
 	}
-	printf("0 ");
+	//printf("0 ");
 	return 0;
 }
 
@@ -146,7 +143,7 @@ void computeTransitionFunction(char *pattern, char *text, std::vector<char> alph
 		for(int letterOfAlphabet = 0; letterOfAlphabet < alphabetSize;letterOfAlphabet++){
 			table[state][letterOfAlphabet] = wordState(pattern,state,alphabet[letterOfAlphabet]);
 		}
-		printf("\n");
+		//printf("\n");
 	}
 	//printTable(table, alphabet, pattern);
 }
