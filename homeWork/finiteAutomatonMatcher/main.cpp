@@ -10,12 +10,11 @@
 # define MAX_ASCII_CHAR 255
 
 void printVector(std::vector<char> v);
-std::vector<char> alphabetExtract(char *pattern);
+//std::vector<char> alphabetExtract(char *pattern);
 
 int wordState(char *pattern, int state, char letter);
 void computeTransitionFunction(char *pattern, char *text, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]);
 void finiteAutomatonMatcher(char *text, char *pattern, std::vector<char> alphabet, int table[][MAX_ASCII_CHAR]);
-
 
 void putThingsOnTable(int table[][MAX_ASCII_CHAR], std::vector<char> alphabet, char *pattern);
 void printTable(int table[][MAX_ASCII_CHAR],std::vector<char> alphabet, char *pattern);
@@ -32,7 +31,7 @@ int main(){
 	scanf(" %[^\n]s", pattern);
 	getchar();
 
-	std::vector<char> alphabet = alphabetExtract(pattern);
+	std::vector<char> alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.',',',' '};
 
 	//printVector(alphabet);
 
@@ -114,7 +113,7 @@ void printVector(std::vector<char> v){
 int wordState(char *pattern, int actualState, char letter){
 	int patternSize = strlen(pattern);
 	int i = 0;
-	printf("%c \n", letter);
+	//printf("%c \n", letter);
 	if (actualState < patternSize && letter == pattern[actualState]){
 		//printf("%d ", actualState+1);
 		return actualState+1;
